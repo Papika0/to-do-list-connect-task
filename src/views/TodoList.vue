@@ -46,8 +46,9 @@ const todos = ref([])
 
 const addTodo = () => {
   if (newTodo.value.trim() === '') return
+  const maxId = todos.value.reduce((max, todo) => Math.max(max, todo.id), -1)
   const newTodoItem = {
-    id: todos.value.length + 1,
+    id: maxId + 1,
     title: newTodo.value,
     completed: false
   }
