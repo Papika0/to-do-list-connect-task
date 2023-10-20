@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-row justify-between">
         <input class="hidden" type="checkbox" :id="todo.id" @change="toggleComplete">
-        <label class="flex items-center h-10 px-2 rounded cursor-pointer hover:bg-gray-900 w-fit" :for="todo.id">
+        <label class="flex items-center h-10 px-2 rounded cursor-pointer hover:bg-gray-900" :for="todo.id">
             <span :class="{ 'bg-green-500 border-green-500': todo.completed }"
                 class="flex items-center justify-center w-5 h-5 text-transparent border-2 border-gray-500 rounded-full">
                 <svg class="w-4 h-4 fill-current" :class="{ 'text-white': todo.completed }"
@@ -11,13 +11,13 @@
                         clip-rule="evenodd" />
                 </svg>
             </span>
-            <span class="ml-4 text-sm" :class="{ 'line-through': todo.completed }"
-                @dblclick="editMode = true; $nextTick(() => $refs.editInput.focus())">
-                <span v-if="!editMode">{{ todo.title }}</span>
-                <input class=" bg-transparent outline-none" ref="editInput" v-if="editMode" v-model="editedTitle"
-                    @keydown.enter="saveEdit" @keydown.esc="cancelEdit" />
+            <span class="ml-4 text-sm" @dblclick="editMode = true; $nextTick(() => $refs.editInput.focus())">
+                <input :class="{ 'line-through': todo.completed }" class="bg-transparent outline-none" ref="editInput"
+                    v-model="editedTitle" @keydown.enter="saveEdit" @keydown.esc="cancelEdit" :disabled="!editMode"
+                    :style="{ width: `${editedTitle.length}ch` }" />
             </span>
         </label>
+
         <div class="inline-flex gap-5">
             <button @click="editMode = true" v-if="!editMode">Edit</button>
             <button @click="deleteItem">Delete</button>
