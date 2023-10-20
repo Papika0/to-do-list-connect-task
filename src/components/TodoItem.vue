@@ -19,14 +19,15 @@
         </label>
 
         <div class="inline-flex gap-5">
-            <button @click="editMode = true" v-if="!editMode">Edit</button>
-            <button @click="deleteItem">Delete</button>
+            <button @click="editMode = true; $nextTick(() => $refs.editInput.focus())" v-if="!editMode">Edit</button>
+            <IconDeleteX class="w-4 h-4 my-auto cursor-pointer" @click="deleteItem">Delete</IconDeleteX>
         </div>
     </div>
 </template>
   
 <script setup>
 import { ref, defineEmits } from 'vue';
+import IconDeleteX from '@/components/icons/IconDeleteX.vue';
 
 const emit = defineEmits();
 
