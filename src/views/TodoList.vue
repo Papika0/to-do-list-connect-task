@@ -18,7 +18,7 @@
                                 d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
                         <input class="flex-grow h-8 ml-4 bg-transparent focus:outline-none font-medium" type="text"
-                            placeholder="add a new task">
+                            v-model="newTodo" @keydown.enter="addTodo" placeholder="add a new task">
                     </button>
                     <div v-for="todo in todos" :key="todo.id">
                         <TodoItem :todo="todo" @editTodo="editTodo" @deleteTodo="deleteTodo"
@@ -38,7 +38,20 @@ import { ref, onMounted } from 'vue';
 import TodoItem from '@/components/TodoItem.vue';
 import axios from 'axios';
 
+const newTodo = ref('');
 const todos = ref([]);
+
+const addTodo = () => {
+    if (newTodo.value.trim() === '') return;
+    const newTodoItem = {
+        userId: 1,
+        id: todos.value.length + 1,
+        title: newTodo.value,
+        completed: false,
+    };
+    todos.value.unshift(newTodoItem);
+    newTodo.value = '';
+};
 
 const editTodo = (obj) => {
     todos.value = todos.value.map((item) => {
